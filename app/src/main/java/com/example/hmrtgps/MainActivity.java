@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
     TextView direccion;
     Button Enviar, Enviarip;
     public static String message, ip;
-    Socket s;
-    DataOutputStream dt;
-    PrintWriter pw;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             direccion.setText(fecha);
             final String men =String.format(String.format("Hola!, Las coordenadas son: Latitud=  %%s, Longitud=  %%s  Fecha: %s HMRT GPS", fecha),sLatitud,sLongitud);
             message= men;
-            ip=phone.toString();
+            ip=phone.getText().toString();
             Enviar.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Enviar en= new Enviar();
