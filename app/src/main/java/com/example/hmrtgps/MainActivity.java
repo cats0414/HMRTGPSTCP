@@ -4,12 +4,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.SmsManager;
@@ -19,21 +18,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     TextView latitud,longitud;
     TextView direccion;
-    Button Enviar;
-    Button ip;
-    String message;
+    Button Enviar, Enviarip;
+    public static String message, ip;
+    Socket s;
+    DataOutputStream dt;
+    PrintWriter pw;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +48,7 @@ public class MainActivity extends AppCompatActivity {
          locationStart();
        }
     }
-    public void enviarr(View v){
-        Enviar en= new Enviar();
-        en.execute();
-    }
+
     private void locationStart() {
         LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Localizacion Local = new Localizacion();
@@ -99,36 +96,20 @@ public class MainActivity extends AppCompatActivity {
             latitud.setText("Latitud= " +sLatitud);
             longitud.setText("Longitud= "+sLongitud);
             final EditText phone= (EditText) findViewById(R.id.phonevalue);
-            if(ActivityCompat.checkSelfPermission(
-                    MainActivity.this, Manifest.permission.SEND_SMS)
-                    != PackageManager.PERMISSION_GRANTED&& ActivityCompat.checkSelfPermission(
-                    MainActivity.this,Manifest
-                            .permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(MainActivity.this,new String[]
-                        { Manifest.permission.SEND_SMS,},1000);
-            }else{
-            };
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String fecha = dateFormat.format(new Date()); // Find todays date
             direccion.setText(fecha);
             final String men =String.format(String.format("Hola!, Las coordenadas son: Latitud=  %%s, Longitud=  %%s  Fecha: %s HMRT GPS", fecha),sLatitud,sLongitud);
-            message= men.toString();
+            message= men;
+            ip=phone.toString();
             Enviar.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    try {
-                        SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage(phone.getText().toString(),null,men,null,null);
-                        Toast.makeText(getApplicationContext(), "Mensaje Enviado.", Toast.LENGTH_LONG).show();
-                    }
-                    catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "Mensaje no enviado, datos incorrectos.", Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    };
+                    Enviar en= new Enviar();
+                    en.execute();
                 }
             });
 
-
-        }
+                          }
         @Override
         public void onProviderDisabled(String provider) {
             // Este metodo se ejecuta cuando el GPS es desactivado
@@ -155,4 +136,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-  }
+    }
+
+

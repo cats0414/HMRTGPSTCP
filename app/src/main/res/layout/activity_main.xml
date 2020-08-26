@@ -26,28 +26,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="72dp"
         android:layout_marginEnd="8dp"
-        android:text="Enviar SMS"
+        android:text="Enviar TCP"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.527"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDireccion" />
-    <Button
-        android:id="@+id/btnEnviarip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="8dp"
-        android:text="Enviar TCP"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:onClick="enviarr"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.527"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEnviar" />
 
     <TextView
         android:id="@+id/txtDireccion"
@@ -83,7 +68,7 @@
         android:layout_marginTop="11dp"
         android:layout_marginEnd="99dp"
         android:layout_marginBottom="16dp"
-        android:ems="10"
+        android:ems="18"
         android:inputType="phone"
         app:layout_constraintBottom_toTopOf="@+id/btnEnviar"
         app:layout_constraintEnd_toEndOf="parent"
