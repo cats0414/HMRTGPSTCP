@@ -8,28 +8,21 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 public class MainActivity extends AppCompatActivity {
     TextView latitud,longitud;
     TextView direccion;
-    Button Enviar, Enviarip;
+    Button Enviar, udp;
     public static String message, ip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,12 +94,13 @@ public class MainActivity extends AppCompatActivity {
             ip=phone.getText().toString();
             Enviar.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Enviar en= new Enviar();
-                    en.execute();
-                }
+                   Enviar en= new Enviar();
+                   en.execute();
+                                   }
             });
 
-                          }
+                                                 }
+
         @Override
         public void onProviderDisabled(String provider) {
             // Este metodo se ejecuta cuando el GPS es desactivado
@@ -131,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+    public void udpp(View view) {
+        Eudp up= new Eudp();
+        up.execute();
     }
 
     }
