@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     TextView latitud,longitud;
     TextView direccion;
     Button Enviar, udp;
-    public static String message, ip;
+    public static String message, ip, puertoudp, puertotcp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,18 +86,23 @@ public class MainActivity extends AppCompatActivity {
             latitud.setText("Latitud= " +sLatitud);
             longitud.setText("Longitud= "+sLongitud);
             final EditText phone= (EditText) findViewById(R.id.phonevalue);
+            final EditText porttcp= (EditText) findViewById(R.id.tcpport);
+            final EditText portudp= (EditText) findViewById(R.id.udpport);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String fecha = dateFormat.format(new Date()); // Find todays date
             direccion.setText(fecha);
             final String men =String.format(String.format("Hola!, Las coordenadas son: Latitud=  %%s, Longitud=  %%s  Fecha: %s HMRT GPS", fecha),sLatitud,sLongitud);
             message= men;
             ip=phone.getText().toString();
+            puertotcp=porttcp.getText().toString();
+            puertoudp=portudp.getText().toString();
             Enviar.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                    Enviar en= new Enviar();
                    en.execute();
                                    }
             });
+
 
                                                  }
 
